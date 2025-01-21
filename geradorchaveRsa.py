@@ -27,15 +27,13 @@ def eprimo_Miller_Rabin(num):
                 num3=pow(num3,2,num)
                 mul*=2
                 if num3 == num1:
-                    res=True
-                    break
+                   return True
                 elif num3 == 1:
-                    break
+                    return False
 
 
 
     
-    return res
 def geradorprimo():
     while True:
         num=geradornumale(1024)
