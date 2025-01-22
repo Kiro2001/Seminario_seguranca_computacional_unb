@@ -1,7 +1,7 @@
 import random
 
 #gerador de número aleatorio que depois vai passar pelo teste de primabilidade para decidir se o número é primo
-def geradornumale(bits):
+def geradorNumAle(bits):
     num=random.randrange((2**(bits-1))+1, (2**bits)-1)
     return num
 
@@ -27,24 +27,50 @@ def eprimo_Miller_Rabin(num):
                 num3=pow(num3,2,num)
                 mul*=2
                 if num3 == num1:
-                   return True
+                    return True
                 elif num3 == 1:
                     return False
 
 
-
-    
-def geradorprimo():
+def geradorPrimo():
     while True:
-        num=geradornumale(1024)
+        num=geradorNumAle(1024)
         if num % 2 != 0:
             if eprimo_Miller_Rabin(num):
                 return num
 
-p=geradorprimo()
-q=geradorprimo()
+def algEucExt(a,b):
+    if a==0:
+        return b,0,1
+    else:
+        mdc,x1,y1=algEucExt(b%a,a)
+        x=y1 - (b//a) *x1
+        y=x1
 
-while q == p:
-    q=geradorprimo()
-print(p)
-print(q)
+    return [mdc,x,y]
+
+def criarChavepriv(p,q,e):
+    phn=(p-1)*(q-1)
+    res=algEucExt(phn,e)
+    pd=res[2]
+    if pd > 0 :
+        d=pd
+    else:
+        d=phn + pd
+    return d
+
+def mainCriarChave(p,q):
+    p=geradorPrimo()
+    q=geradorPrimo()
+    while q == p:
+        q=geradorPrimo()
+    n=p*q
+    e = 65537
+    chavpub=[n,e]
+    chavpriv=criarChavepriv(p,q,e)
+    return [chavpub,chavpriv]
+
+
+
+
+
