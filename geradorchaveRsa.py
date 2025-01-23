@@ -59,15 +59,15 @@ def criarChavepriv(p,q,e):
         d=phn + pd
     return d
 
-def mainCriarChave(p,q):
+def mainCriarChave():
     p=geradorPrimo()
     q=geradorPrimo()
     while q == p:
         q=geradorPrimo()
     n=p*q
     e = 65537
-    chavpub=[n,e]
-    chavpriv=criarChavepriv(p,q,e)
+    chavpub=[e,n]
+    chavpriv=[criarChavepriv(p,q,e),n]
     return [chavpub,chavpriv]
 
 
