@@ -1,22 +1,29 @@
-from geradorchaveRsa import mainCriarChave
+import hashlib
+import base64
+from geradorchaveRsa import criarChaves
+from obase64 import codificarb64
 
-def encrip(msg,chav):
-    cif=pow(msg,chav[0],chav[1])
+
+def criptografar(mensagem: int, chave: int) -> int:
+    cif = pow(mensagem, chave[0], chave[1])
     return cif
 
-def decrip(cif,chav):
-    msg=pow(cif,chav[0],chav[1])
+
+def descriptografar(mensagem_cifrada: int, chave: int):
+    msg = pow(mensagem_cifrada, chave[0], chave[1])
     return msg
 
-    
-chaves=mainCriarChave()
-chavpub=chaves[0]
-chavpriv=chaves[1]
 
-msg=104
+def assinar(mensagem: str, chave: int):
+    hash = hashlib.sha3_256(mensagem.encode("utf-8")).hexdigest()
+    assinatura = criptografar(int(hash, 16), chave)
+    n_bytes = (assinatura.bit_length() + 7) // 8
+    bytes_assinatura = assinatura.to_bytes(n_bytes, byteorder="big")
+    return base64.b64encode(bytes_assinatura).decode("ascii")
 
-cif=encrip(msg,chavpub)
-print(cif)
 
-msg1=decrip(cif,chavpriv)
-print(msg1)
+chave_publica, chave_privada = criarChaves(1024)
+
+msg = "mensagem qualquer"
+assinatura = assinar(msg, chave_privada)
+print(assinatura)
