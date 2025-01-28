@@ -41,6 +41,13 @@ def geradorPrimo(n_bits: int):
             if eprimo_Miller_Rabin(num):
                 return num
 
+def mdc(a,b):
+    while b != 0:
+        resto = a % b
+        a = b
+        b = resto
+
+    return a
 
 def algEucExt(a: int, b: int) -> tuple:
     if a == 0:
@@ -52,9 +59,15 @@ def algEucExt(a: int, b: int) -> tuple:
 
     return [mdc, x, y]
 
+def criarChavePublica(phi):
+    while True:
+        num=geradorNumAle(100)
+        if (num%2) != 0:
+            if mdc(phi,num) == 1 :
+                break
+    return num
 
-def criarChavePrivada(p: int, q: int, e: int) -> int:
-    phn = (p - 1) * (q - 1)
+def criarChavePrivada(p: int, q: int, e: int, phn: int) -> int:
     res = algEucExt(phn, e)
     pd = res[2]
     if pd > 0:
@@ -70,7 +83,8 @@ def criarChaves(n_bits: int) -> list:
     while q == p:
         q = geradorPrimo(n_bits)
     n = p * q
-    e = 65537
+    phn = (p - 1) * (q - 1)
+    e = criarChavePublica(phn)
     chave_publica = [e, n]
-    chave_privada = [criarChavePrivada(p, q, e), n]
+    chave_privada = [criarChavePrivada(p, q, e, phn), n]
     return [chave_publica, chave_privada]
