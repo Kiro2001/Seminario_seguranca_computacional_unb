@@ -1,7 +1,5 @@
 import hashlib
 import base64
-from geradorchaveRsa import criarChaves
-from obase64 import codificarb64
 
 
 def criptografar(mensagem: int, chave: int) -> int:
@@ -20,10 +18,3 @@ def assinar(mensagem: str, chave: int):
     n_bytes = (assinatura.bit_length() + 7) // 8
     bytes_assinatura = assinatura.to_bytes(n_bytes, byteorder="big")
     return base64.b64encode(bytes_assinatura).decode("ascii")
-
-
-chave_publica, chave_privada = criarChaves(1024)
-
-msg = "mensagem qualquer"
-assinatura = assinar(msg, chave_privada)
-print(assinatura)
