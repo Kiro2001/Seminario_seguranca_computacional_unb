@@ -24,7 +24,6 @@ def codificarb64(string):
         for k in range(4 - padding):
             ind = k * 6
             val2 = val[ind : ind + 6]
-            print(val2)
             strb64 += lstchr[int(val2, 2)]
 
         for i in range(padding):
