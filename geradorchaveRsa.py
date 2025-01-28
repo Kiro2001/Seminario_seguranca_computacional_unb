@@ -1,6 +1,6 @@
 import random
 
-N_ROUNDS_MILLER_RABIN = 4
+
 
 
 # gerador de número aleatorio que depois vai passar pelo teste de primabilidade para decidir se o número é primo
@@ -9,43 +9,36 @@ def geradorNumAle(bits: int):
     return num
 
 
-def testeMillerRabin(d: int, n: int):
-    a = 2 + random.randint(1, n - 4)
-    x = pow(a, d, n)
-    if x == 1 or x == n - 1:
+def eprimo_Miller_Rabin(num):
+    if (num == 1) or (num == 2) or (num == 3):
         return True
-    while d != n - 1:
-        x = (x * x) % n
-        d *= 2
-        if x == 1:
-            return False
-        if x == n - 1:
-            return True
-    return False
-
-
-def ehPrimo(n: int):
-    if n <= 1 or n == 4:
+    elif num % 2 == 0:
         return False
-    if n <= 3:
-        return True
-
-    d = n - 1
-    while d % 2 == 0:
-        d //= 2
-
-    for _ in range(N_ROUNDS_MILLER_RABIN):
-        if not testeMillerRabin(d, n):
-            return False
-
-    return True
-
+    else:
+        num1=num - 1
+        exp=1
+        while(num1%(2**exp) == 0):
+            exp+=1
+        exp-=1
+        mul=num1 // (2**exp)
+        num2=random.randrange(2,num1)
+        num3=pow(num2,mul,num)
+        if (num3 == 1) or (num3 == num1):
+            return True
+        else:
+            while mul != num1:
+                num3=pow(num3,2,num)
+                mul*=2
+                if num3 == num1:
+                    return True
+                elif num3 == 1:
+                    return False
 
 def geradorPrimo(n_bits: int):
     while True:
         num = geradorNumAle(n_bits)
         if num % 2 != 0:
-            if ehPrimo(num):
+            if eprimo_Miller_Rabin(num):
                 return num
 
 
