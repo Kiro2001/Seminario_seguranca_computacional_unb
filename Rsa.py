@@ -7,7 +7,7 @@ def criptografar(mensagem: int, chave: int) -> int:
     return cif
 
 
-def descriptografar(mensagem_cifrada: int, chave: int):
+def descriptografar(mensagem_cifrada: int, chave: int) -> int:
     msg = pow(mensagem_cifrada, chave[0], chave[1])
     return msg
 
