@@ -6,7 +6,6 @@ def geradorNumAle(bits: int):
     num = random.randrange((2 ** (bits - 1)) + 1, (2**bits) - 1)
     return num
 
-
 def eprimo_Miller_Rabin(num):
     if num <= 1:
         return False
@@ -93,3 +92,5 @@ def criarChaves(n_bits: int) -> list:
     chave_publica = [e, n]
     chave_privada = [criarChavePrivada(p, q, e, phn), n]
     return [chave_publica, chave_privada]
+
+
