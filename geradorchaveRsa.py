@@ -91,5 +91,5 @@ def criarChaves(n_bits: int) -> list:
     phn = (p - 1) * (q - 1)
     e = criarChavePublica(phn)
     chave_publica = [e, n]
-    chave_privada = [pow(e, -1, phn), n]
+    chave_privada = [criarChavePrivada(p, q, e, phn), n]
     return [chave_publica, chave_privada]
