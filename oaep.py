@@ -1,7 +1,7 @@
 import math
 import hashlib
 import os
-from Rsa import criptografar, descriptografar
+from rsa import criptografar, descriptografar
 
 
 def mgf1(seed: bytes, k: int, tam_hash: int = 20) -> bytes:
@@ -16,7 +16,7 @@ def xor_bytes(a: bytes, b: bytes) -> bytes:
     return bytes(x ^ y for x, y in zip(a, b))
 
 
-def codificar_oaep(mensagem_em_bytes, k, rotulo=b""):
+def codificar_oaep(mensagem_em_bytes: bytes, k: int, rotulo: bytes = b""):
     db = (
         hashlib.sha1(rotulo).digest()
         + b"\x00"
@@ -32,7 +32,7 @@ def codificar_oaep(mensagem_em_bytes, k, rotulo=b""):
     return b"\x00" + masked_seed + masked_db
 
 
-def decodificar_oaep(texto_cifrado, k, rotulo=b""):
+def decodificar_oaep(texto_cifrado: bytes, k: int, rotulo: bytes = b""):
     masked_seed, masked_db = (
         texto_cifrado[1 : 1 + len(hashlib.sha1(rotulo).digest())],
         texto_cifrado[1 + len(hashlib.sha1(rotulo).digest()) :],
