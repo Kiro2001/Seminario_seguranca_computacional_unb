@@ -18,10 +18,12 @@ if __name__ == "__main__":
         case "2":
             chave_publica, chave_privada = lerChaves("public.pem", "private.pem")
             msg = input("Digite a mensagem a ser assinada: ")
+            nome_arquivo = input("Digite o nome do arquivo a ser salvo: ")
             assinar_documento(
                 mensagem_claro=msg,
                 chave_publica=chave_publica,
                 chave_privada=chave_privada,
+                nome_arquivo=nome_arquivo,
             )
         case "3":
             chave_publica, chave_privada = lerChaves("public.pem", "private.pem")
