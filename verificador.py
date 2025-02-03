@@ -9,7 +9,8 @@ def verificar_documento(
 ) -> bool:
     with open(nome_arquivo, "r") as f:
         mensagem_cifrada = base64.b64decode(f.readline())
-        assinatura = f.readline().encode("utf-8")
+        assinatura = f.readline()
+
     mensagem_claro = oaep.decifrar(mensagem_cifrada, chave_privada).decode("utf-8")
     print(f"Mensagem decifrada: {mensagem_claro}")
     return verificarAssinatura(mensagem_claro, chave_publica, assinatura)

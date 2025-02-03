@@ -28,6 +28,10 @@ def verificarAssinatura(msg, chave, assinatura):
     assinatura_recebida_dec = descriptografar(assinatura_recebida_int, chave)
     assinatura_recebida_hex = hex(assinatura_recebida_dec)
     assinatura_recebida_hex = assinatura_recebida_hex[2::]
+
+    if len(assinatura_recebida_hex) != 64:
+        assinatura_recebida_hex="0" + assinatura_recebida_hex
+ 
     if assinatura_recebida_hex == hash_confirmar:
         return True
     else:
