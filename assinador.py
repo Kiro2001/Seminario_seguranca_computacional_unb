@@ -3,7 +3,9 @@ import base64
 import oaep
 from rsa import gerarAssinatura
 
-
+def assinar_msg(msg,chave_pri):
+    assinatura = gerarAssinatura(msg, chave_pri)
+    return assinatura.decode("utf-8")
 def assinar_documento(
     mensagem_claro: str,
     chave_publica: tuple[int, int],

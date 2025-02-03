@@ -3,6 +3,8 @@ import base64
 from rsa import verificarAssinatura
 import oaep
 
+def verificar_msg(msg,chave,assinatura):
+    return verificarAssinatura(msg, chave, assinatura)
 
 def verificar_documento(
     nome_arquivo: str, chave_publica: tuple[int, int], chave_privada: tuple[int, int]
